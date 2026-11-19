@@ -1,3 +1,13 @@
 spring:
   application:
     name: rdv-api
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
