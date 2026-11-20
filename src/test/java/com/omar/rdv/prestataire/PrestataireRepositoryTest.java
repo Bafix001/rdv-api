@@ -19,14 +19,12 @@ class PrestataireRepositoryTest {
     private PrestataireRepository prestataireRepository;
 
     @Test
-    void refuseUnEmailDejaUtilise() throws Exception {
+    void refuseUnEmailDejaUtilise() {
         //Given
         Prestataire awa = new Prestataire("awa", "awa@mail.com", "motdepasse");
         prestataireRepository.saveAndFlush(awa);
 
-        //When
+        //Then
         assertThrows(DataIntegrityViolationException.class, () -> prestataireRepository.saveAndFlush(new Prestataire("awa bis", "Awa@mail.com", "autre")));
     }
-
-
 }
