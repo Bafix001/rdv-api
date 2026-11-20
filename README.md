@@ -89,6 +89,15 @@ Les tests démarrent automatiquement un conteneur PostgreSQL avec **Testcontaine
 
 Aucun secret n'est stocké dans le dépôt.
 
+## Base de données et migrations
+
+Le schéma est géré par **Flyway**, et non par Hibernate (`ddl-auto: validate`).
+
+- Les scripts sont dans `src/main/resources/db/migration`.
+- Ils sont nommés `V<numéro>__<description>.sql`, avec **deux** underscores, par exemple `V2__creer_prestataire.sql`.
+- Ils s'exécutent automatiquement au démarrage, dans l'ordre des numéros.
+- **Une migration déjà fusionnée sur `main` ne se modifie jamais** : pour corriger, on ajoute une nouvelle migration.
+
 ---
 
 ## Méthode de travail
