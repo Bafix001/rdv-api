@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "activite")
-@Getter                                                    // n°6 : plus de @Setter sur la classe
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Activite {
 
@@ -17,7 +17,7 @@ public class Activite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)    // n°1 : un à un, obligatoire
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "prestataire_id", nullable = false, unique = true)
     private Prestataire prestataire;
 
