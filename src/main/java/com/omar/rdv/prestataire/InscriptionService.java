@@ -3,10 +3,10 @@ package com.omar.rdv.prestataire;
 import com.omar.rdv.activite.Activite;
 import com.omar.rdv.activite.ActiviteRepository;
 import com.omar.rdv.activite.SlugDejaUtiliseException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +17,7 @@ public class InscriptionService {
 
     @Transactional
     public InscriptionResponse inscrire(InscriptionRequest request) {
-        Prestataire prestataire = new Prestataire(request.nom(), request.email(),passwordEncoder.encode(request.motDePasse()));
+        Prestataire prestataire = new Prestataire(request.nom(), request.email(), passwordEncoder.encode(request.motDePasse()));
 
         if (prestataireRepository.existsByEmail(prestataire.getEmail())) {
             throw new EmailDejaUtiliseException(prestataire.getEmail());
@@ -33,9 +33,6 @@ public class InscriptionService {
 
         activiteRepository.save(activite);
 
-        return new InscriptionResponse(prestataire.getId(),
-                prestataire.getNom(),
-                prestataire.getEmail(),
-                activite.getSlug());
+        return new InscriptionResponse(prestataire.getId(), prestataire.getNom(), prestataire.getEmail(), activite.getSlug());
     }
 }

@@ -28,10 +28,7 @@ public class GestionnaireErreurs {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail donneesInvalides(MethodArgumentNotValidException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-                HttpStatus.BAD_REQUEST,
-                "Les données envoyées sont invalides"
-        );
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Les données envoyées sont invalides");
         problemDetail.setTitle("Erreur de validation");
 
         Map<String, String> erreurs = new HashMap<>();
@@ -44,8 +41,8 @@ public class GestionnaireErreurs {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ProblemDetail conflitDeDonnees(DataIntegrityViolationException e){
-        return  ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Cette donnée existe déjà");
+    public ProblemDetail conflitDeDonnees(DataIntegrityViolationException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Cette donnée existe déjà");
     }
 
 
