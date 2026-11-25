@@ -25,7 +25,7 @@ public class GenerateurJeton {
     public String generer(Prestataire prestataire){
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("rdv")
+                .issuer("rdv-api")
                 .issuedAt(now)
                 .expiresAt(now.plus(duree))
                 .subject(prestataire.getId().toString())
