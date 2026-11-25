@@ -2,6 +2,7 @@ package com.omar.rdv.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,7 +26,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(regles -> regles
                         .requestMatchers("/api/v1/prestataire/auth/**", "/api/v1/public/**", "/actuator/health", "/error").permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
 }

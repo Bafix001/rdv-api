@@ -2,6 +2,7 @@ package com.omar.rdv.erreur;
 
 import com.omar.rdv.activite.SlugDejaUtiliseException;
 import com.omar.rdv.prestataire.EmailDejaUtiliseException;
+import com.omar.rdv.prestataire.IdentifiantsInvalidesException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -45,5 +46,9 @@ public class GestionnaireErreurs {
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Cette donnée existe déjà");
     }
 
+    @ExceptionHandler(IdentifiantsInvalidesException.class)
+    public ProblemDetail identifiantsInvalides(IdentifiantsInvalidesException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
 
 }
