@@ -50,6 +50,7 @@ Le produit vise aussi bien la France que l'Afrique de l'Ouest (Bénin) : il doit
 | D12 | **Un client est rattaché à une activité** (unicité sur activité + téléphone). | Un prestataire ne doit pas voir les rendez-vous qu'un même client a pris chez un autre prestataire. |
 | D13 | **L'API est versionnée et séparée** en partie publique (`/api/v1/public`) et partie prestataire (`/api/v1/prestataire`). | Préparer l'ouverture future de l'API à des sites externes sans casser l'existant. |
 | D14 | **L'envoi des notifications passe par une interface** (`Notification` / `EnvoiCode`), avec une seule implémentation email dans le MVP. | Ajouter WhatsApp ou SMS plus tard sans modifier la logique de réservation (pattern Strategy). |
+| D15 | **Authentification par jeton JWT émis par l'application**, signé avec une clé secrète et valable 8 h, sans jeton de rafraîchissement dans le MVP. L'API le vérifie avec le module standard *OAuth2 Resource Server* de Spring Security. Un serveur d'identité externe (Keycloak) a été écarté pour le MVP. | Une seule application, dont les comptes sont déjà en base : un serveur d'identité ajouterait un service à déployer et une migration des comptes, sans besoin réel. Le jeton garde l'API sans état. Le module standard permettra de passer plus tard à un fournisseur d'identité sans réécrire la vérification. |
 
 ---
 
@@ -181,6 +182,8 @@ erDiagram
 |---|---|
 | R18 | Un prestataire ne voit et ne modifie **que ses propres données**. Les URL de l'espace prestataire ne contiennent pas d'identifiant d'activité : elle est déduite de l'utilisateur connecté. |
 | R19 | Les mots de passe sont stockés hachés (BCrypt), jamais en clair. |
+| R20 | La clé de signature des jetons est fournie par une variable d'environnement (au moins 256 bits) et n'est jamais écrite dans le dépôt. |
+| R21 | En cas d'échec de connexion, le message est identique que l'email soit inconnu ou le mot de passe faux, pour ne pas révéler quels comptes existent. |
 
 ---
 
@@ -256,3 +259,4 @@ Choix notables : l'annulation est un `POST` (on change un statut, on ne supprime
 - Protection contre les **réservations abusives** (limite par téléphone ou par adresse IP).
 - Rappels automatiques avant le rendez-vous.
 - Rôle **administrateur** de la plateforme.
+- **Serveur d'identité** (Keycloak) : mot de passe oublié, double authentification, connexion avec Google ; **jeton de rafraîchissement** et révocation des jetons.
