@@ -51,7 +51,10 @@ cd rdv-api
 
 # 2. Créer son fichier d'environnement (jamais committé)
 cp .env.example .env
-# puis renseigner POSTGRES_PASSWORD dans .env
+# puis renseigner dans .env :
+#   - POSTGRES_PASSWORD : un mot de passe au choix
+#   - JWT_SECRET        : une clé générée avec la commande suivante
+openssl rand -base64 32
 
 # 3. Démarrer PostgreSQL et MailDev
 docker compose up -d
@@ -86,6 +89,7 @@ Les tests démarrent automatiquement un conteneur PostgreSQL avec **Testcontaine
 | `application.yaml` | Configuration commune à tous les environnements |
 | `application-dev.yaml` | Développement local : PostgreSQL et MailDev, identifiants lus depuis `.env` |
 | `.env.example` | Modèle des variables d'environnement à copier dans `.env` |
+| `src/test/resources/application-test.yaml` | Tests : clé JWT fictive, utilisée uniquement par les tests |
 
 Aucun secret n'est stocké dans le dépôt.
 

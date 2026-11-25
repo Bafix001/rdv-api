@@ -11,3 +11,8 @@ management:
     web:
       exposure:
         include: health
+
+rdv:
+  jwt:
+    secret: ${JWT_SECRET}
+    duree: 8h

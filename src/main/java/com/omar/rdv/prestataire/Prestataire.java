@@ -34,7 +34,11 @@ public class Prestataire {
 
     public Prestataire(String nom, String email, String motDePasse) {
         this.nom = nom;
-        this.email = email.trim().toLowerCase(Locale.ROOT);
+        this.email = normaliserEmail(email);
         this.motDePasse = motDePasse;
+    }
+
+    public static String normaliserEmail(String email) {
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 }
